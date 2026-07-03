@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lekki Bites — Real Naija Flavour, Lekki Phase 1</title>
+<meta name="description" content="Lekki Bites is a Lagos restaurant serving authentic Nigerian dishes in Lekki Phase 1. Order via WhatsApp or visit us today.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#c9531f;
+    --terracotta-dark:#a03e14;
+    --green:#1e4d2b;
+    --green-dark:#123018;
+    --cream:#fbf1df;
+    --cream-2:#f4e4c8;
+    --ink:#2a1c12;
+    --gold:#e6a13a;
+    --whatsapp:#25d366;
+    --radius:14px;
+    --shadow:0 10px 30px rgba(42,28,18,.15);
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;margin:0;line-height:1.05;}
+  a{color:inherit;text-decoration:none;}
+  .container{width:100%;max-width:1140px;margin:0 auto;padding:0 20px;}
+  .eyebrow{
+    display:inline-block;
+    font-size:.72rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--terracotta-dark);
+    background:rgba(201,83,31,.1);
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .section-title{font-size:clamp(1.8rem,6vw,2.6rem);color:var(--green-dark);}
+  .section-sub{color:#6b5b48;font-size:1.02rem;margin-top:10px;max-width:520px;}
+  section{padding:64px 0;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:rgba(251,241,223,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(42,28,18,.08);
+  }
+  .nav-wrap{display:flex;align-items:center;justify-content:space-between;height:66px;}
+  .logo{display:flex;align-items:center;gap:8px;font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;color:var(--green-dark);}
+  .logo span{color:var(--terracotta);}
+  nav.links{display:none;gap:28px;align-items:center;}
+  nav.links a{font-weight:600;font-size:.95rem;color:var(--ink);opacity:.85;transition:opacity .2s;}
+  nav.links a:hover{opacity:1;color:var(--terracotta-dark);}
+  .nav-cta{
+    display:none;
+    background:var(--whatsapp);color:#fff;font-weight:700;font-size:.9rem;
+    padding:10px 18px;border-radius:999px;align-items:center;gap:8px;
+    box-shadow:0 4px 14px rgba(37,211,102,.35);
+  }
+  .burger{
+    display:flex;flex-direction:column;justify-content:center;gap:5px;
+    width:38px;height:38px;border:none;background:none;cursor:pointer;padding:0;
+  }
+  .burger span{display:block;height:2px;width:24px;background:var(--ink);border-radius:2px;transition:.25s;}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .burger.open span:nth-child(2){opacity:0;}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .mobile-menu{
+    position:fixed;top:66px;left:0;right:0;background:var(--cream);
+    border-bottom:1px solid rgba(42,28,18,.08);
+    display:flex;flex-direction:column;padding:10px 20px 20px;
+    transform:translateY(-130%);transition:transform .3s ease;
+    box-shadow:var(--shadow);
+  }
+  .mobile-menu.open{transform:translateY(0);}
+  .mobile-menu a{padding:14px 4px;font-weight:600;border-bottom:1px solid rgba(42,28,18,.06);}
+  .mobile-menu .nav-cta{display:flex;justify-content:center;margin-top:14px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    align-items:flex-end;
+    color:#fff;
+    background-image:
+      linear-gradient(180deg, rgba(18,10,6,.35) 0%, rgba(18,10,6,.35) 40%, rgba(18,10,6,.88) 100%),
+      url('https://images.unsplash.com/photo-1665332195309-9d75071138f0?w=1200&q=75&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center 30%;
+    padding-top:100px;
+  }
+  .hero-inner{padding-bottom:56px;position:relative;z-index:2;}
+  .hero .eyebrow{background:rgba(255,255,255,.15);color:#ffe3c2;backdrop-filter:blur(4px);}
+  .hero h1{font-size:clamp(2.6rem,9vw,4.6rem);font-weight:900;letter-spacing:-.01em;}
+  .hero h1 em{font-style:italic;color:var(--gold);}
+  .hero p.tagline{
+    margin-top:16px;font-size:clamp(1.05rem,3vw,1.3rem);
+    color:#f3e6d3;max-width:480px;font-weight:500;
+  }
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:15px 24px;border-radius:999px;font-weight:700;font-size:.98rem;
+    border:2px solid transparent;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-whatsapp{background:var(--whatsapp);color:#fff;box-shadow:0 8px 20px rgba(37,211,102,.4);}
+  .btn-whatsapp:hover{box-shadow:0 10px 26px rgba(37,211,102,.55);}
+  .btn-outline{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.55);backdrop-filter:blur(4px);}
+  .btn-outline:hover{background:rgba(255,255,255,.18);}
+  .scroll-cue{
+    position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+    color:rgba(255,255,255,.75);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+    display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2;
+  }
+  .scroll-cue .dot{width:1px;height:26px;background:linear-gradient(#fff,transparent);animation:scrollcue 1.6s infinite;}
+  @keyframes scrollcue{0%{opacity:0;transform:translateY(-6px);}50%{opacity:1;}100%{opacity:0;transform:translateY(10px);}}
+
+  /* ---------- About ---------- */
+  .about{background:var(--cream);}
+  .about-grid{display:grid;grid-template-columns:1fr;gap:34px;align-items:center;}
+  .about-photo{
+    border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+    aspect-ratio:4/3;position:relative;
+  }
+  .about-photo img{width:100%;height:100%;object-fit:cover;}
+  .about-text p{font-size:1.08rem;line-height:1.75;color:#4a3a2a;margin:16px 0 0;}
+  .stat-row{display:flex;gap:26px;margin-top:26px;flex-wrap:wrap;}
+  .stat b{display:block;font-family:'Fraunces',serif;font-size:1.6rem;color:var(--terracotta-dark);}
+  .stat span{font-size:.82rem;color:#6b5b48;text-transform:uppercase;letter-spacing:.06em;}
+
+  /* ---------- Menu ---------- */
+  .menu{background:var(--green-dark);color:var(--cream);position:relative;overflow:hidden;}
+  .menu::before{
+    content:"";position:absolute;inset:0;opacity:.08;
+    background-image:radial-gradient(circle at 20% 20%, #fff 0, transparent 2px),radial-gradient(circle at 80% 60%, #fff 0, transparent 2px);
+    background-size:60px 60px;pointer-events:none;
+  }
+  .menu .section-sub{color:#cfe0cf;}
+  .menu-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:36px;position:relative;z-index:1;}
+  .menu-grid{display:grid;grid-template-columns:1fr;gap:16px;position:relative;z-index:1;}
+  .dish{
+    display:flex;justify-content:space-between;gap:16px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:var(--radius);
+    padding:20px 22px;
+  }
+  .dish-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;color:#fff;}
+  .dish-tag{display:inline-block;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:4px;}
+  .dish-desc{color:#c9d6c9;font-size:.92rem;margin-top:6px;max-width:380px;}
+  .dish-price{
+    font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;color:var(--gold);
+    white-space:nowrap;align-self:center;
+  }
+  .menu-note{margin-top:26px;color:#a9bfa9;font-size:.88rem;position:relative;z-index:1;}
+
+  /* ---------- Gallery ---------- */
+  .gallery{background:var(--cream-2);}
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+  }
+  .gallery-grid figure{
+    margin:0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+    aspect-ratio:1/1;position:relative;
+  }
+  .gallery-grid img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+  .gallery-grid figure:hover img{transform:scale(1.08);}
+  .gallery-grid figcaption{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:14px 12px 10px;
+    background:linear-gradient(0deg, rgba(18,10,6,.75), transparent);
+    color:#fff;font-size:.82rem;font-weight:600;
+  }
+
+  /* ---------- Location ---------- */
+  .location{background:var(--cream);}
+  .loc-grid{display:grid;grid-template-columns:1fr;gap:30px;}
+  .loc-card{
+    background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:26px;border:1px solid rgba(42,28,18,.06);
+  }
+  .loc-card h3{font-size:1.15rem;color:var(--green-dark);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .loc-card p{margin:0;color:#4a3a2a;line-height:1.7;}
+  .hours-table{width:100%;border-collapse:collapse;margin-top:4px;}
+  .hours-table td{padding:7px 0;font-size:.95rem;color:#4a3a2a;border-bottom:1px dashed rgba(42,28,18,.12);}
+  .hours-table td:last-child{text-align:right;font-weight:600;color:var(--terracotta-dark);}
+  .hours-table tr:last-child td{border-bottom:none;}
+  .map-embed{
+    border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+    border:1px solid rgba(42,28,18,.08);
+    aspect-ratio:4/3;
+  }
+  .map-embed iframe{width:100%;height:100%;border:0;}
+
+  /* ---------- CTA strip ---------- */
+  .cta-strip{
+    background:var(--terracotta);color:#fff;text-align:center;padding:56px 0;
+  }
+  .cta-strip h2{color:#fff;font-size:clamp(1.6rem,5vw,2.2rem);}
+  .cta-strip p{color:#ffe3c9;margin:12px 0 26px;font-size:1.02rem;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink);color:#cbb89e;padding:36px 0 26px;text-align:center;font-size:.85rem;}
+  footer .logo{color:#fff;justify-content:center;margin-bottom:10px;}
+  footer .foot-links{display:flex;justify-content:center;gap:18px;margin:14px 0;flex-wrap:wrap;}
+  footer .foot-links a{opacity:.85;}
+  footer .foot-links a:hover{opacity:1;color:var(--gold);}
+
+  /* ---------- Floating WhatsApp ---------- */
+  .float-whatsapp{
+    position:fixed;bottom:18px;right:18px;z-index:900;
+    width:58px;height:58px;border-radius:50%;background:var(--whatsapp);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 22px rgba(37,211,102,.5);
+    animation:pulse 2.4s infinite;
+  }
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.55);}70%{box-shadow:0 0 0 14px rgba(37,211,102,0);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}}
+
+  /* ---------- Hero load-in ---------- */
+  .hero-inner{animation:heroIn .8s ease both;}
+  @keyframes heroIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  @media(prefers-reduced-motion:reduce){.hero-inner{animation:none;}}
+
+  /* ---------- Tablet / Desktop ---------- */
+  @media(min-width:760px){
+    nav.links{display:flex;}
+    .nav-cta{display:inline-flex;}
+    .burger{display:none;}
+    .about-grid{grid-template-columns:1fr 1fr;}
+    .about-grid.reverse .about-photo{order:2;}
+    .menu-grid{grid-template-columns:1fr 1fr;}
+    .gallery-grid{grid-template-columns:repeat(4,1fr);}
+    .gallery-grid figure:first-child{grid-column:span 2;grid-row:span 2;}
+    .loc-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(min-width:1000px){
+    .hero h1{font-size:5.2rem;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-wrap">
+    <a href="#top" class="logo">🍲 Lekki <span>Bites</span></a>
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#location">Location</a>
+    </nav>
+    <a class="nav-cta" href="https://wa.me/2348000000000?text=Hi%20Lekki%20Bites%2C%20I%27d%20like%20to%20place%20an%20order" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3C8.4 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.6 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.2.8.2.4.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.8 1.7.4.2.6.1.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 .9 2.3 1.1.3.2.5.3.6.4.1.2.1.9-.1 1.5z"/></svg>
+      Order Now
+    </a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#menu">Menu</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#location">Location</a>
+    <a class="nav-cta" href="https://wa.me/2348000000000?text=Hi%20Lekki%20Bites%2C%20I%27d%20like%20to%20place%20an%20order" target="_blank" rel="noopener">Order on WhatsApp</a>
+  </div>
+</header>
+
+<div id="top"></div>
+<section class="hero">
+  <div class="container hero-inner">
+    <span class="eyebrow">Lekki Phase 1, Lagos</span>
+    <h1>Naija flavour,<br>served with <em>love</em>.</h1>
+    <p class="tagline">Jollof, suya and soups made the way your grandmother swore by — fresh every day at Lekki Bites.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-whatsapp" href="https://wa.me/2348000000000?text=Hi%20Lekki%20Bites%2C%20I%27d%20like%20to%20place%20an%20order" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3C8.4 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.6 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.2.8.2.4.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.8 1.7.4.2.6.1.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 .9 2.3 1.1.3.2.5.3.6.4.1.2.1.9-.1 1.5z"/></svg>
+        Order on WhatsApp
+      </a>
+      <a class="btn btn-outline" href="#menu">View Menu</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="dot"></span>Scroll</div>
+</section>
+
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-photo">
+      <img src="https://images.unsplash.com/photo-1771681208497-c066baf0c97d?w=800&q=75&auto=format&fit=crop" alt="Cozy outdoor seating area at Lekki Bites restaurant" loading="lazy">
+    </div>
+    <div class="about-text">
+      <span class="eyebrow">Our Story</span>
+      <h2 class="section-title">A little corner of home in Lekki</h2>
+      <p>Lekki Bites started as a small kitchen on Admiralty Way with one promise: no shortcuts on flavour. Every pot of jollof, every bowl of egusi, is cooked slow and seasoned generously, the way it's done at home.</p>
+      <p>Today we're a favourite stop for Lekki families, Island professionals on lunch break, and anyone craving real Naija food without the wait.</p>
+      <div class="stat-row">
+        <div class="stat"><b>7+</b><span>Years serving Lekki</span></div>
+        <div class="stat"><b>30</b><span>Dishes on rotation</span></div>
+        <div class="stat"><b>4.8★</b><span>Customer rating</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="container">
+    <div class="menu-head">
+      <div>
+        <span class="eyebrow" style="background:rgba(230,161,58,.15);color:var(--gold);">Our Menu</span>
+        <h2 class="section-title" style="color:#fff;">Crowd favourites</h2>
+        <p class="section-sub">A taste of what keeps Lekki coming back — full menu available in-store and on WhatsApp.</p>
+      </div>
+    </div>
+    <div class="menu-grid">
+      <div class="dish">
+        <div>
+          <span class="dish-tag">Signature</span>
+          <div class="dish-name">Lekki Special Jollof Rice</div>
+          <div class="dish-desc">Smoky party-style jollof rice with grilled chicken, fried plantain and coleslaw.</div>
+        </div>
+        <div class="dish-price">₦4,500</div>
+      </div>
+      <div class="dish">
+        <div>
+          <span class="dish-tag">Local Favourite</span>
+          <div class="dish-name">Egusi Soup & Pounded Yam</div>
+          <div class="dish-desc">Melon seed soup loaded with assorted meat, stockfish and ugu leaves.</div>
+        </div>
+        <div class="dish-price">₦5,500</div>
+      </div>
+      <div class="dish">
+        <div>
+          <span class="dish-tag">Street Classic</span>
+          <div class="dish-name">Suya Platter</div>
+          <div class="dish-desc">Spicy skewered beef and chicken suya, sliced onions, tomato and yaji spice.</div>
+        </div>
+        <div class="dish-price">₦3,800</div>
+      </div>
+      <div class="dish">
+        <div>
+          <span class="dish-tag">Soul Food</span>
+          <div class="dish-name">Efo Riro & Fufu</div>
+          <div class="dish-desc">Rich vegetable soup with smoked fish and beef, served with soft fufu.</div>
+        </div>
+        <div class="dish-price">₦4,800</div>
+      </div>
+      <div class="dish">
+        <div>
+          <span class="dish-tag">Weekend Pick</span>
+          <div class="dish-name">Native Fried Rice & Grilled Fish</div>
+          <div class="dish-desc">Nigerian-style fried rice with garden vegetables and whole grilled croaker fish.</div>
+        </div>
+        <div class="dish-price">₦5,200</div>
+      </div>
+      <div class="dish">
+        <div>
+          <span class="dish-tag">Small Chops</span>
+          <div class="dish-name">Peppered Asun</div>
+          <div class="dish-desc">Diced smoky grilled goat meat tossed in pepper sauce, onions and bell peppers.</div>
+        </div>
+        <div class="dish-price">₦4,000</div>
+      </div>
+    </div>
+    <p class="menu-note">Prices are subject to change. Ask about our daily specials on WhatsApp.</p>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div style="margin-bottom:30px;">
+      <span class="eyebrow">Gallery</span>
+      <h2 class="section-title">A taste, before you taste it</h2>
+      <p class="section-sub">Fresh out the kitchen — no filters needed.</p>
+    </div>
+    <div class="gallery-grid">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1763048443535-1243379234e2?w=900&q=75&auto=format&fit=crop" alt="Egusi soup with assorted meat" loading="lazy">
+        <figcaption>Egusi Soup, loaded</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1603496987674-79600a000f55?w=700&q=75&auto=format&fit=crop" alt="Grilled chicken on jollof rice" loading="lazy">
+        <figcaption>Jollof & Grilled Chicken</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=700&q=75&auto=format&fit=crop" alt="Efo riro vegetable soup with fufu" loading="lazy">
+        <figcaption>Efo Riro & Fufu</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1540714605746-4f474eefc6d4?w=700&q=75&auto=format&fit=crop" alt="Fried plantain (dodo)" loading="lazy">
+        <figcaption>Golden Fried Plantain</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="location" id="location">
+  <div class="container">
+    <div style="margin-bottom:30px;">
+      <span class="eyebrow">Visit Us</span>
+      <h2 class="section-title">Find us in Lekki Phase 1</h2>
+      <p class="section-sub">Dine in, pick up, or order for delivery straight to your doorstep.</p>
+    </div>
+    <div class="loc-grid">
+      <div>
+        <div class="loc-card" style="margin-bottom:18px;">
+          <h3>📍 Address</h3>
+          <p>12 Admiralty Way, Lekki Phase 1,<br>Lagos, Nigeria</p>
+        </div>
+        <div class="loc-card">
+          <h3>🕒 Opening Hours</h3>
+          <table class="hours-table">
+            <tr><td>Monday – Thursday</td><td>10:00 AM – 9:30 PM</td></tr>
+            <tr><td>Friday – Saturday</td><td>10:00 AM – 11:00 PM</td></tr>
+            <tr><td>Sunday</td><td>12:00 PM – 9:00 PM</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="map-embed">
+        <iframe
+          src="https://maps.google.com/maps?q=Admiralty%20Way%2C%20Lekki%20Phase%201%2C%20Lagos&t=&z=15&ie=UTF8&output=embed"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="Lekki Bites location map — Admiralty Way, Lekki Phase 1, Lagos">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container">
+    <h2>Hungry already?</h2>
+    <p>Skip the line — send us a message and we'll get your food moving.</p>
+    <a class="btn btn-whatsapp" style="background:#fff;color:var(--green-dark);" href="https://wa.me/2348000000000?text=Hi%20Lekki%20Bites%2C%20I%27d%20like%20to%20place%20an%20order" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3C8.4 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.6 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.2.8.2.4.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.8 1.7.4.2.6.1.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 .9 2.3 1.1.3.2.5.3.6.4.1.2.1.9-.1 1.5z"/></svg>
+      +234 800 000 0000
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <a href="#top" class="logo">🍲 Lekki Bites</a>
+    <p>12 Admiralty Way, Lekki Phase 1, Lagos, Nigeria</p>
+    <div class="foot-links">
+      <a href="#about">About</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#location">Location</a>
+    </div>
+    <p>&copy; 2026 Lekki Bites. All rights reserved. · Demo site for design purposes.</p>
+  </div>
+</footer>
+
+<a class="float-whatsapp" href="https://wa.me/2348000000000?text=Hi%20Lekki%20Bites%2C%20I%27d%20like%20to%20place%20an%20order" target="_blank" rel="noopener" aria-label="Order on WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3C8.4 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.6 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.2.8.2.4.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.8 1.7.4.2.6.1.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 .9 2.3 1.1.3.2.5.3.6.4.1.2.1.9-.1 1.5z"/></svg>
+</a>
+
+<script>
+  var burger = document.getElementById('burger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', function(){
+    burger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      burger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
