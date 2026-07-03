@@ -2,13 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Lekki Bites — Real Naija Flavour, Lekki Phase 1</title>
 <meta name="description" content="Lekki Bites is a Lagos restaurant serving authentic Nigerian dishes in Lekki Phase 1. Order via WhatsApp or visit us today.">
+<meta name="theme-color" content="#c9531f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lekki Bites">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23c9531f%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 text-anchor=%22middle%22>🍲</text></svg>">
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Lekki%20Bites%22,%22short_name%22:%22Lekki%20Bites%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23fbf1df%22,%22theme_color%22:%22%23c9531f%22}">
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" fetchpriority="high" href="https://images.unsplash.com/photo-1665332195309-9d75071138f0?w=900&q=70&auto=format&fit=crop">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -25,7 +33,7 @@
     --shadow:0 10px 30px rgba(42,28,18,.15);
   }
   *,*::before,*::after{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;overscroll-behavior-y:none;background:var(--cream);}
   body{
     margin:0;
     font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
@@ -33,8 +41,12 @@
     color:var(--ink);
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    overscroll-behavior-y:none;
+    -webkit-tap-highlight-color:transparent;
   }
   img{max-width:100%;display:block;}
+  button{font-family:inherit;}
+  @media(max-width:759px){ body{padding-bottom:calc(66px + env(safe-area-inset-bottom));} }
   h1,h2,h3{font-family:'Fraunces',Georgia,serif;margin:0;line-height:1.05;}
   a{color:inherit;text-decoration:none;}
   .container{width:100%;max-width:1140px;margin:0 auto;padding:0 20px;}
@@ -57,11 +69,15 @@
   /* ---------- Header ---------- */
   header{
     position:fixed;top:0;left:0;right:0;z-index:1000;
+    padding-top:env(safe-area-inset-top);
     background:rgba(251,241,223,.92);
     backdrop-filter:blur(8px);
     border-bottom:1px solid rgba(42,28,18,.08);
+    transition:box-shadow .25s ease;
   }
-  .nav-wrap{display:flex;align-items:center;justify-content:space-between;height:66px;}
+  header.scrolled{box-shadow:0 6px 18px rgba(42,28,18,.08);}
+  .nav-wrap{display:flex;align-items:center;justify-content:space-between;height:66px;transition:height .25s ease;}
+  header.scrolled .nav-wrap{height:56px;}
   .logo{display:flex;align-items:center;gap:8px;font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;color:var(--green-dark);}
   .logo span{color:var(--terracotta);}
   nav.links{display:none;gap:28px;align-items:center;}
@@ -73,24 +89,6 @@
     padding:10px 18px;border-radius:999px;align-items:center;gap:8px;
     box-shadow:0 4px 14px rgba(37,211,102,.35);
   }
-  .burger{
-    display:flex;flex-direction:column;justify-content:center;gap:5px;
-    width:38px;height:38px;border:none;background:none;cursor:pointer;padding:0;
-  }
-  .burger span{display:block;height:2px;width:24px;background:var(--ink);border-radius:2px;transition:.25s;}
-  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-  .burger.open span:nth-child(2){opacity:0;}
-  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-  .mobile-menu{
-    position:fixed;top:66px;left:0;right:0;background:var(--cream);
-    border-bottom:1px solid rgba(42,28,18,.08);
-    display:flex;flex-direction:column;padding:10px 20px 20px;
-    transform:translateY(-130%);transition:transform .3s ease;
-    box-shadow:var(--shadow);
-  }
-  .mobile-menu.open{transform:translateY(0);}
-  .mobile-menu a{padding:14px 4px;font-weight:600;border-bottom:1px solid rgba(42,28,18,.06);}
-  .mobile-menu .nav-cta{display:flex;justify-content:center;margin-top:14px;}
 
   /* ---------- Hero ---------- */
   .hero{
@@ -101,10 +99,17 @@
     color:#fff;
     background-image:
       linear-gradient(180deg, rgba(18,10,6,.35) 0%, rgba(18,10,6,.35) 40%, rgba(18,10,6,.88) 100%),
-      url('https://images.unsplash.com/photo-1665332195309-9d75071138f0?w=1200&q=75&auto=format&fit=crop');
+      url('https://images.unsplash.com/photo-1665332195309-9d75071138f0?w=900&q=70&auto=format&fit=crop');
     background-size:cover;
     background-position:center 30%;
     padding-top:100px;
+  }
+  @media(min-width:760px){
+    .hero{
+      background-image:
+        linear-gradient(180deg, rgba(18,10,6,.35) 0%, rgba(18,10,6,.35) 40%, rgba(18,10,6,.88) 100%),
+        url('https://images.unsplash.com/photo-1665332195309-9d75071138f0?w=1800&q=75&auto=format&fit=crop');
+    }
   }
   .hero-inner{padding-bottom:56px;position:relative;z-index:2;}
   .hero .eyebrow{background:rgba(255,255,255,.15);color:#ffe3c2;backdrop-filter:blur(4px);}
@@ -168,8 +173,9 @@
   .dish-desc{color:#c9d6c9;font-size:.92rem;margin-top:6px;max-width:380px;}
   .dish-price{
     font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;color:var(--gold);
-    white-space:nowrap;align-self:center;
+    white-space:nowrap;
   }
+  .dish-side{display:flex;align-items:center;gap:8px;align-self:center;}
   .menu-note{margin-top:26px;color:#a9bfa9;font-size:.88rem;position:relative;z-index:1;}
 
   /* ---------- Gallery ---------- */
@@ -224,11 +230,12 @@
   footer .foot-links a{opacity:.85;}
   footer .foot-links a:hover{opacity:1;color:var(--gold);}
 
-  /* ---------- Floating WhatsApp ---------- */
+  /* ---------- Floating WhatsApp (desktop only; mobile uses tab bar) ---------- */
   .float-whatsapp{
+    display:none;
     position:fixed;bottom:18px;right:18px;z-index:900;
     width:58px;height:58px;border-radius:50%;background:var(--whatsapp);
-    display:flex;align-items:center;justify-content:center;
+    align-items:center;justify-content:center;
     box-shadow:0 8px 22px rgba(37,211,102,.5);
     animation:pulse 2.4s infinite;
   }
@@ -239,11 +246,120 @@
   @keyframes heroIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
   @media(prefers-reduced-motion:reduce){.hero-inner{animation:none;}}
 
+  /* ---------- Image skeleton / fade-in ---------- */
+  .img-load{
+    position:relative;background:linear-gradient(100deg, rgba(42,28,18,.06) 30%, rgba(42,28,18,.13) 50%, rgba(42,28,18,.06) 70%);
+    background-size:200% 100%;animation:shimmer 1.4s infinite;
+  }
+  .img-load img{opacity:0;transition:opacity .45s ease;}
+  .img-load img.loaded{opacity:1;}
+  .img-load.loaded{animation:none;background:none;}
+  @keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+  /* ---------- Bottom tab bar (mobile app-style nav) ---------- */
+  .tabbar{
+    position:fixed;left:0;right:0;bottom:0;z-index:950;
+    display:flex;
+    background:rgba(255,250,240,.92);
+    backdrop-filter:blur(14px);
+    border-top:1px solid rgba(42,28,18,.1);
+    padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+    box-shadow:0 -6px 20px rgba(42,28,18,.08);
+  }
+  .tab-item{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;
+    font-size:.64rem;font-weight:600;color:#8a7862;
+    padding:6px 2px 4px;border-radius:12px;transition:color .2s ease;
+  }
+  .tab-item .tab-icon{font-size:1.3rem;line-height:1;transition:transform .15s ease;}
+  .tab-item:active .tab-icon{transform:scale(.82);}
+  .tab-item.active{color:var(--terracotta-dark);}
+  .tab-order{color:var(--green-dark);}
+  .tab-order .tab-icon{
+    width:42px;height:42px;border-radius:50%;background:var(--whatsapp);
+    display:flex;align-items:center;justify-content:center;margin-top:-22px;
+    box-shadow:0 6px 16px rgba(37,211,102,.45);border:4px solid rgba(255,250,240,.92);
+    transition:transform .15s ease;
+  }
+  .tab-order:active .tab-icon{transform:scale(.88) translateY(1px);}
+
+  /* ---------- Dish cards (tappable) ---------- */
+  .dish{cursor:pointer;transition:transform .12s ease, background .2s ease;-webkit-tap-highlight-color:transparent;}
+  .dish:active{transform:scale(.98);background:rgba(255,255,255,.09);}
+  .dish-chevron{color:var(--gold);opacity:.7;align-self:center;font-size:1.3rem;}
+
+  /* ---------- Gallery tap targets ---------- */
+  .gallery-grid figure{cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .gallery-grid figure:active img{transform:scale(1.04);}
+
+  /* ---------- Modal overlay (shared) ---------- */
+  .overlay-backdrop{
+    position:fixed;inset:0;z-index:1200;
+    background:rgba(18,10,6,.55);
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+    display:flex;align-items:flex-end;justify-content:center;
+  }
+  .overlay-backdrop.open{opacity:1;pointer-events:auto;}
+  @media(min-width:760px){.overlay-backdrop{align-items:center;padding:20px;}}
+
+  /* ---------- Dish detail modal (bottom sheet on mobile) ---------- */
+  .dish-modal{
+    background:var(--cream);width:100%;max-width:520px;
+    border-radius:22px 22px 0 0;
+    max-height:88vh;overflow-y:auto;overscroll-behavior:contain;
+    transform:translateY(100%);transition:transform .32s cubic-bezier(.32,.72,0,1);
+    padding-bottom:env(safe-area-inset-bottom);
+    position:relative;
+  }
+  .overlay-backdrop.open .dish-modal{transform:translateY(0);}
+  @media(min-width:760px){
+    .dish-modal{border-radius:22px;max-height:80vh;transform:translateY(18px) scale(.97);opacity:0;transition:transform .28s ease, opacity .28s ease;}
+    .overlay-backdrop.open .dish-modal{transform:translateY(0) scale(1);opacity:1;}
+  }
+  .modal-handle{width:40px;height:5px;background:rgba(42,28,18,.18);border-radius:99px;margin:10px auto 0;touch-action:none;}
+  @media(min-width:760px){.modal-handle{display:none;}}
+  .modal-close{
+    position:absolute;top:14px;right:14px;z-index:2;width:34px;height:34px;border-radius:50%;
+    background:rgba(18,10,6,.35);border:none;font-size:1.15rem;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .modal-img{width:100%;aspect-ratio:4/3;overflow:hidden;}
+  .modal-img img{width:100%;height:100%;object-fit:cover;}
+  .modal-body{padding:20px 24px 28px;}
+  .modal-body h3{font-size:1.5rem;color:var(--green-dark);margin:6px 0 10px;}
+  .modal-body p{color:#4a3a2a;line-height:1.7;font-size:1rem;margin:0;}
+  .modal-footer{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px;flex-wrap:wrap;}
+  .modal-price{font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem;color:var(--terracotta-dark);}
+
+  /* ---------- Gallery lightbox ---------- */
+  .lightbox{
+    position:fixed;inset:0;z-index:1300;
+    background:rgba(8,5,3,.95);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+  }
+  .lightbox.open{opacity:1;pointer-events:auto;}
+  .lightbox img{max-width:92vw;max-height:76vh;border-radius:12px;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+  .lightbox-close,.lightbox-prev,.lightbox-next{
+    position:absolute;background:rgba(255,255,255,.14);border:none;color:#fff;
+    width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:1.4rem;cursor:pointer;backdrop-filter:blur(6px);
+  }
+  .lightbox-close{top:calc(16px + env(safe-area-inset-top));right:16px;}
+  .lightbox-prev{left:12px;top:50%;transform:translateY(-50%);}
+  .lightbox-next{right:12px;top:50%;transform:translateY(-50%);}
+  .lightbox-caption{
+    position:absolute;bottom:calc(20px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;
+    color:#f3e6d3;font-weight:600;font-size:.95rem;padding:0 70px;
+  }
+  @media(max-width:600px){.lightbox-prev,.lightbox-next{width:38px;height:38px;font-size:1.2rem;}}
+
   /* ---------- Tablet / Desktop ---------- */
   @media(min-width:760px){
     nav.links{display:flex;}
     .nav-cta{display:inline-flex;}
-    .burger{display:none;}
+    .tabbar{display:none;}
+    .float-whatsapp{display:flex;}
     .about-grid{grid-template-columns:1fr 1fr;}
     .about-grid.reverse .about-photo{order:2;}
     .menu-grid{grid-template-columns:1fr 1fr;}
@@ -271,19 +387,10 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3C8.4 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.6 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.2.8.2.4.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.8 1.7.4.2.6.1.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 .9 2.3 1.1.3.2.5.3.6.4.1.2.1.9-.1 1.5z"/></svg>
       Order Now
     </a>
-    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#about">About</a>
-    <a href="#menu">Menu</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#location">Location</a>
-    <a class="nav-cta" href="https://wa.me/2348000000000?text=Hi%20Lekki%20Bites%2C%20I%27d%20like%20to%20place%20an%20order" target="_blank" rel="noopener">Order on WhatsApp</a>
   </div>
 </header>
 
-<div id="top"></div>
-<section class="hero">
+<section class="hero" id="top">
   <div class="container hero-inner">
     <span class="eyebrow">Lekki Phase 1, Lagos</span>
     <h1>Naija flavour,<br>served with <em>love</em>.</h1>
@@ -301,8 +408,12 @@
 
 <section class="about" id="about">
   <div class="container about-grid">
-    <div class="about-photo">
-      <img src="https://images.unsplash.com/photo-1771681208497-c066baf0c97d?w=800&q=75&auto=format&fit=crop" alt="Cozy outdoor seating area at Lekki Bites restaurant" loading="lazy">
+    <div class="about-photo img-load">
+      <img src="https://images.unsplash.com/photo-1771681208497-c066baf0c97d?w=800&q=75&auto=format&fit=crop"
+           srcset="https://images.unsplash.com/photo-1771681208497-c066baf0c97d?w=500&q=70&auto=format&fit=crop 500w,
+                   https://images.unsplash.com/photo-1771681208497-c066baf0c97d?w=900&q=75&auto=format&fit=crop 900w"
+           sizes="(min-width:760px) 50vw, 100vw"
+           alt="Cozy outdoor seating area at Lekki Bites restaurant" loading="lazy" decoding="async">
     </div>
     <div class="about-text">
       <span class="eyebrow">Our Story</span>
@@ -328,53 +439,83 @@
       </div>
     </div>
     <div class="menu-grid">
-      <div class="dish">
+      <div class="dish" data-tag="Signature" data-name="Lekki Special Jollof Rice" data-price="₦4,500"
+           data-desc="Smoky party-style jollof rice slow-cooked over an open flame for that signature char, served with grilled chicken, fried plantain and coleslaw."
+           data-img="https://images.unsplash.com/photo-1603496987674-79600a000f55">
         <div>
           <span class="dish-tag">Signature</span>
           <div class="dish-name">Lekki Special Jollof Rice</div>
           <div class="dish-desc">Smoky party-style jollof rice with grilled chicken, fried plantain and coleslaw.</div>
         </div>
-        <div class="dish-price">₦4,500</div>
+        <div class="dish-side">
+          <div class="dish-price">₦4,500</div>
+          <span class="dish-chevron">›</span>
+        </div>
       </div>
-      <div class="dish">
+      <div class="dish" data-tag="Local Favourite" data-name="Egusi Soup & Pounded Yam" data-price="₦5,500"
+           data-desc="Melon seed soup loaded with assorted meat, stockfish and ugu leaves, simmered slow for a deep, nutty flavour — served with soft pounded yam."
+           data-img="https://images.unsplash.com/photo-1763048443535-1243379234e2">
         <div>
           <span class="dish-tag">Local Favourite</span>
           <div class="dish-name">Egusi Soup & Pounded Yam</div>
           <div class="dish-desc">Melon seed soup loaded with assorted meat, stockfish and ugu leaves.</div>
         </div>
-        <div class="dish-price">₦5,500</div>
+        <div class="dish-side">
+          <div class="dish-price">₦5,500</div>
+          <span class="dish-chevron">›</span>
+        </div>
       </div>
-      <div class="dish">
+      <div class="dish" data-tag="Street Classic" data-name="Suya Platter" data-price="₦3,800"
+           data-desc="Spicy skewered beef and chicken suya, grilled fresh over charcoal and dusted with our house yaji spice blend, served with sliced onion and tomato."
+           data-img="https://images.unsplash.com/photo-1636301175138-08aba8191957">
         <div>
           <span class="dish-tag">Street Classic</span>
           <div class="dish-name">Suya Platter</div>
           <div class="dish-desc">Spicy skewered beef and chicken suya, sliced onions, tomato and yaji spice.</div>
         </div>
-        <div class="dish-price">₦3,800</div>
+        <div class="dish-side">
+          <div class="dish-price">₦3,800</div>
+          <span class="dish-chevron">›</span>
+        </div>
       </div>
-      <div class="dish">
+      <div class="dish" data-tag="Soul Food" data-name="Efo Riro & Fufu" data-price="₦4,800"
+           data-desc="Rich vegetable soup with smoked fish, beef and a generous helping of ugu — served with soft, stretchy fufu made fresh daily."
+           data-img="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26">
         <div>
           <span class="dish-tag">Soul Food</span>
           <div class="dish-name">Efo Riro & Fufu</div>
           <div class="dish-desc">Rich vegetable soup with smoked fish and beef, served with soft fufu.</div>
         </div>
-        <div class="dish-price">₦4,800</div>
+        <div class="dish-side">
+          <div class="dish-price">₦4,800</div>
+          <span class="dish-chevron">›</span>
+        </div>
       </div>
-      <div class="dish">
+      <div class="dish" data-tag="Weekend Pick" data-name="Native Fried Rice & Grilled Fish" data-price="₦5,200"
+           data-desc="Nigerian-style fried rice tossed with garden vegetables and liver, paired with a whole grilled croaker fish seasoned in-house."
+           data-img="https://images.unsplash.com/photo-1664993101841-036f189719b6">
         <div>
           <span class="dish-tag">Weekend Pick</span>
           <div class="dish-name">Native Fried Rice & Grilled Fish</div>
           <div class="dish-desc">Nigerian-style fried rice with garden vegetables and whole grilled croaker fish.</div>
         </div>
-        <div class="dish-price">₦5,200</div>
+        <div class="dish-side">
+          <div class="dish-price">₦5,200</div>
+          <span class="dish-chevron">›</span>
+        </div>
       </div>
-      <div class="dish">
+      <div class="dish" data-tag="Small Chops" data-name="Peppered Asun" data-price="₦4,000"
+           data-desc="Diced smoky grilled goat meat tossed in our fiery pepper sauce with onions and bell peppers — a favourite for sharing over drinks."
+           data-img="https://images.unsplash.com/photo-1628294896516-344152572ee8">
         <div>
           <span class="dish-tag">Small Chops</span>
           <div class="dish-name">Peppered Asun</div>
           <div class="dish-desc">Diced smoky grilled goat meat tossed in pepper sauce, onions and bell peppers.</div>
         </div>
-        <div class="dish-price">₦4,000</div>
+        <div class="dish-side">
+          <div class="dish-price">₦4,000</div>
+          <span class="dish-chevron">›</span>
+        </div>
       </div>
     </div>
     <p class="menu-note">Prices are subject to change. Ask about our daily specials on WhatsApp.</p>
@@ -389,20 +530,40 @@
       <p class="section-sub">Fresh out the kitchen — no filters needed.</p>
     </div>
     <div class="gallery-grid">
-      <figure>
-        <img src="https://images.unsplash.com/photo-1763048443535-1243379234e2?w=900&q=75&auto=format&fit=crop" alt="Egusi soup with assorted meat" loading="lazy">
+      <figure class="img-load">
+        <img src="https://images.unsplash.com/photo-1763048443535-1243379234e2?w=700&q=75&auto=format&fit=crop"
+             srcset="https://images.unsplash.com/photo-1763048443535-1243379234e2?w=500&q=70&auto=format&fit=crop 500w,
+                     https://images.unsplash.com/photo-1763048443535-1243379234e2?w=900&q=75&auto=format&fit=crop 900w"
+             sizes="(min-width:760px) 45vw, 50vw"
+             data-full="https://images.unsplash.com/photo-1763048443535-1243379234e2?w=1600&q=80&auto=format&fit=crop"
+             alt="Egusi soup with assorted meat" loading="lazy" decoding="async">
         <figcaption>Egusi Soup, loaded</figcaption>
       </figure>
-      <figure>
-        <img src="https://images.unsplash.com/photo-1603496987674-79600a000f55?w=700&q=75&auto=format&fit=crop" alt="Grilled chicken on jollof rice" loading="lazy">
+      <figure class="img-load">
+        <img src="https://images.unsplash.com/photo-1603496987674-79600a000f55?w=500&q=75&auto=format&fit=crop"
+             srcset="https://images.unsplash.com/photo-1603496987674-79600a000f55?w=380&q=70&auto=format&fit=crop 380w,
+                     https://images.unsplash.com/photo-1603496987674-79600a000f55?w=700&q=75&auto=format&fit=crop 700w"
+             sizes="(min-width:760px) 22vw, 50vw"
+             data-full="https://images.unsplash.com/photo-1603496987674-79600a000f55?w=1600&q=80&auto=format&fit=crop"
+             alt="Grilled chicken on jollof rice" loading="lazy" decoding="async">
         <figcaption>Jollof & Grilled Chicken</figcaption>
       </figure>
-      <figure>
-        <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=700&q=75&auto=format&fit=crop" alt="Efo riro vegetable soup with fufu" loading="lazy">
+      <figure class="img-load">
+        <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=500&q=75&auto=format&fit=crop"
+             srcset="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=380&q=70&auto=format&fit=crop 380w,
+                     https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=700&q=75&auto=format&fit=crop 700w"
+             sizes="(min-width:760px) 22vw, 50vw"
+             data-full="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=1600&q=80&auto=format&fit=crop"
+             alt="Efo riro vegetable soup with fufu" loading="lazy" decoding="async">
         <figcaption>Efo Riro & Fufu</figcaption>
       </figure>
-      <figure>
-        <img src="https://images.unsplash.com/photo-1540714605746-4f474eefc6d4?w=700&q=75&auto=format&fit=crop" alt="Fried plantain (dodo)" loading="lazy">
+      <figure class="img-load">
+        <img src="https://images.unsplash.com/photo-1540714605746-4f474eefc6d4?w=500&q=75&auto=format&fit=crop"
+             srcset="https://images.unsplash.com/photo-1540714605746-4f474eefc6d4?w=380&q=70&auto=format&fit=crop 380w,
+                     https://images.unsplash.com/photo-1540714605746-4f474eefc6d4?w=700&q=75&auto=format&fit=crop 700w"
+             sizes="(min-width:760px) 22vw, 50vw"
+             data-full="https://images.unsplash.com/photo-1540714605746-4f474eefc6d4?w=1600&q=80&auto=format&fit=crop"
+             alt="Fried plantain (dodo)" loading="lazy" decoding="async">
         <figcaption>Golden Fried Plantain</figcaption>
       </figure>
     </div>
@@ -471,19 +632,241 @@
   <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3C8.4 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.6 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.2.8.2.4.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.8 1.7.4.2.6.1.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 .9 2.3 1.1.3.2.5.3.6.4.1.2.1.9-.1 1.5z"/></svg>
 </a>
 
+<!-- Mobile app-style bottom tab bar -->
+<nav class="tabbar" id="tabbar" aria-label="Primary">
+  <a class="tab-item" data-section="top" href="#top"><span class="tab-icon">🏠</span>Home</a>
+  <a class="tab-item" data-section="menu" href="#menu"><span class="tab-icon">📋</span>Menu</a>
+  <a class="tab-item tab-order" href="https://wa.me/2348000000000?text=Hi%20Lekki%20Bites%2C%20I%27d%20like%20to%20place%20an%20order" target="_blank" rel="noopener">
+    <span class="tab-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3C8.4 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.6 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.2.8.2.4.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.8 1.7.4.2.6.1.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 .9 2.3 1.1.3.2.5.3.6.4.1.2.1.9-.1 1.5z"/></svg></span>
+    Order
+  </a>
+  <a class="tab-item" data-section="gallery" href="#gallery"><span class="tab-icon">📸</span>Gallery</a>
+  <a class="tab-item" data-section="location" href="#location"><span class="tab-icon">📍</span>Visit</a>
+</nav>
+
+<!-- Dish detail modal -->
+<div class="overlay-backdrop" id="dishModalBackdrop">
+  <div class="dish-modal" id="dishModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+    <div class="modal-handle"></div>
+    <button class="modal-close" id="dishModalClose" aria-label="Close">×</button>
+    <div class="modal-img img-load">
+      <img id="modalImg" src="" alt="" decoding="async">
+    </div>
+    <div class="modal-body">
+      <span class="dish-tag" id="modalTag"></span>
+      <h3 id="modalName"></h3>
+      <p id="modalDesc"></p>
+      <div class="modal-footer">
+        <span class="modal-price" id="modalPrice"></span>
+        <a class="btn btn-whatsapp" id="modalOrderBtn" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.9-1.3C8.4 21.5 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm5.6 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.2.8.2.4.9 1.5 1.9 2.4 1.3 1.2 2.4 1.5 2.8 1.7.4.2.6.1.8-.1.2-.2.9-1 1.1-1.4.2-.4.5-.3.8-.2.3.1 2 .9 2.3 1.1.3.2.5.3.6.4.1.2.1.9-.1 1.5z"/></svg>
+          Order this dish
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Gallery lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+  <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-next" id="lightboxNext" aria-label="Next photo">›</button>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
 <script>
-  var burger = document.getElementById('burger');
-  var mobileMenu = document.getElementById('mobileMenu');
-  burger.addEventListener('click', function(){
-    burger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
+(function(){
+  "use strict";
+
+  /* ---------- Header shrink on scroll ---------- */
+  var header = document.querySelector('header');
+  function onScroll(){
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- Image skeleton fade-in ---------- */
+  document.querySelectorAll('.img-load img').forEach(function(img){
+    function reveal(){ img.classList.add('loaded'); img.parentElement.classList.add('loaded'); }
+    if(img.complete && img.naturalWidth) reveal();
+    else{
+      img.addEventListener('load', reveal);
+      img.addEventListener('error', reveal);
+    }
   });
-  mobileMenu.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){
-      burger.classList.remove('open');
-      mobileMenu.classList.remove('open');
+
+  /* ---------- Shared scroll lock (supports nested/overlapping overlays) ---------- */
+  var lockY = 0, lockCount = 0;
+  function lockScroll(){
+    if(lockCount === 0){
+      lockY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = -lockY + 'px';
+      document.body.style.width = '100%';
+    }
+    lockCount++;
+  }
+  function unlockScroll(){
+    lockCount = Math.max(0, lockCount - 1);
+    if(lockCount === 0){
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, lockY);
+    }
+  }
+
+  /* ---------- Dish detail modal ---------- */
+  var dishModalBackdrop = document.getElementById('dishModalBackdrop');
+  var dishModal = document.getElementById('dishModal');
+  var modalImgWrap = dishModal.querySelector('.modal-img');
+  var modalImg = document.getElementById('modalImg');
+  var modalTag = document.getElementById('modalTag');
+  var modalName = document.getElementById('modalName');
+  var modalDesc = document.getElementById('modalDesc');
+  var modalPrice = document.getElementById('modalPrice');
+  var modalOrderBtn = document.getElementById('modalOrderBtn');
+
+  function openDishModal(dishEl){
+    var d = dishEl.dataset;
+    modalTag.textContent = d.tag;
+    modalName.textContent = d.name;
+    modalDesc.textContent = d.desc;
+    modalPrice.textContent = d.price;
+    modalImgWrap.classList.remove('loaded');
+    modalImg.classList.remove('loaded');
+    modalImg.src = d.img + '?w=900&q=75&auto=format&fit=crop';
+    modalImg.alt = d.name;
+    modalOrderBtn.href = 'https://wa.me/2348000000000?text=' +
+      encodeURIComponent("Hi Lekki Bites, I'd like to order the " + d.name + ' (' + d.price + ').');
+    dishModalBackdrop.classList.add('open');
+    lockScroll();
+    if(navigator.vibrate) navigator.vibrate(8);
+  }
+  function closeDishModal(){
+    if(!dishModalBackdrop.classList.contains('open')) return;
+    dishModalBackdrop.classList.remove('open');
+    unlockScroll();
+  }
+  document.querySelectorAll('.dish').forEach(function(el){
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('click', function(){ openDishModal(el); });
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openDishModal(el); }
     });
   });
+  document.getElementById('dishModalClose').addEventListener('click', closeDishModal);
+  dishModalBackdrop.addEventListener('click', function(e){
+    if(e.target === dishModalBackdrop) closeDishModal();
+  });
+
+  /* swipe-down-to-dismiss on the sheet handle */
+  (function(){
+    var handle = dishModal.querySelector('.modal-handle');
+    var startY = null, lastDelta = 0, dragging = false;
+    function start(e){ dragging = true; startY = e.touches[0].clientY; dishModal.style.transition = 'none'; }
+    function move(e){
+      if(!dragging) return;
+      lastDelta = Math.max(0, e.touches[0].clientY - startY);
+      dishModal.style.transform = 'translateY(' + lastDelta + 'px)';
+    }
+    function end(){
+      if(!dragging) return;
+      dragging = false;
+      dishModal.style.transition = '';
+      dishModal.style.transform = '';
+      if(lastDelta > 120) closeDishModal();
+      lastDelta = 0;
+    }
+    handle.addEventListener('touchstart', start, {passive:true});
+    handle.addEventListener('touchmove', move, {passive:true});
+    handle.addEventListener('touchend', end);
+  })();
+
+  /* ---------- Gallery lightbox ---------- */
+  var figures = Array.prototype.slice.call(document.querySelectorAll('.gallery-grid figure'));
+  var photos = figures.map(function(fig){
+    var img = fig.querySelector('img');
+    return { full: img.dataset.full || img.src, alt: img.alt, caption: fig.querySelector('figcaption').textContent };
+  });
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxCaption = document.getElementById('lightboxCaption');
+  var lbIndex = 0;
+
+  function showLightbox(i){
+    lbIndex = (i + photos.length) % photos.length;
+    var p = photos[lbIndex];
+    lightboxImg.src = p.full;
+    lightboxImg.alt = p.alt;
+    lightboxCaption.textContent = p.caption;
+  }
+  function openLightbox(i){
+    showLightbox(i);
+    lightbox.classList.add('open');
+    lockScroll();
+  }
+  function closeLightbox(){
+    if(!lightbox.classList.contains('open')) return;
+    lightbox.classList.remove('open');
+    unlockScroll();
+  }
+  figures.forEach(function(fig, i){
+    fig.setAttribute('tabindex', '0');
+    fig.setAttribute('role', 'button');
+    fig.setAttribute('aria-label', 'View photo: ' + photos[i].caption);
+    fig.addEventListener('click', function(){ openLightbox(i); });
+    fig.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLightbox(i); }
+    });
+  });
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', function(){ showLightbox(lbIndex - 1); });
+  document.getElementById('lightboxNext').addEventListener('click', function(){ showLightbox(lbIndex + 1); });
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
+
+  /* swipe left/right to navigate */
+  (function(){
+    var startX = null;
+    lightbox.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+    lightbox.addEventListener('touchend', function(e){
+      if(startX === null) return;
+      var delta = e.changedTouches[0].clientX - startX;
+      if(Math.abs(delta) > 40) showLightbox(lbIndex + (delta > 0 ? -1 : 1));
+      startX = null;
+    });
+  })();
+
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    closeDishModal();
+    closeLightbox();
+  });
+
+  /* ---------- Bottom tab bar: scroll-spy + tap feedback ---------- */
+  var tabItems = document.querySelectorAll('.tab-item[data-section]');
+  var sections = [];
+  tabItems.forEach(function(t){
+    var el = document.getElementById(t.dataset.section);
+    if(el) sections.push({ id: t.dataset.section, el: el });
+  });
+  if('IntersectionObserver' in window){
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        tabItems.forEach(function(t){ t.classList.toggle('active', t.dataset.section === entry.target.id); });
+      });
+    }, {rootMargin:'-40% 0px -50% 0px'});
+    sections.forEach(function(s){ spy.observe(s.el); });
+  }
+  document.querySelectorAll('.tab-item').forEach(function(t){
+    t.addEventListener('click', function(){ if(navigator.vibrate) navigator.vibrate(6); });
+  });
+})();
 </script>
 
 </body>
